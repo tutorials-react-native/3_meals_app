@@ -15,24 +15,15 @@ const CategoryMealsScreen = ({ navigation }) => {
     meal => meal.categoryIds.indexOf(selectedCategory.id) >= 0
   );
 
+  const selectMealHandler = itemData => {
+    navigation.navigate({
+      routeName: "MealDetail",
+      params: { mealId: itemData.item.id }
+    });
+  };
+
   const renderMeals = itemData => {
-    const {
-      title,
-      complexity,
-      duration,
-      affordability,
-      imageUrl
-    } = itemData.item;
-    return (
-      <MealItem
-        title={title}
-        complexity={complexity}
-        duration={duration}
-        affordability={affordability}
-        imageUrl={imageUrl}
-        onSelectMeal={() => {}}
-      />
-    );
+    return <MealItem itemData={itemData} onSelectMeal={selectMealHandler} />;
   };
 
   return (
