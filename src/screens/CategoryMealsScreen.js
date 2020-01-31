@@ -36,12 +36,12 @@ const CategoryMealsScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.meals}>
+    <View style={styles.screen}>
       <FlatList
         keyExtractor={item => item.id}
         data={meals}
         renderItem={renderMeals}
-        contentContainerStyle={styles.screen}
+        style={styles.meals}
       />
     </View>
   );
@@ -56,11 +56,13 @@ CategoryMealsScreen.navigationOptions = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   meals: {
-    alignItems: "center"
+    width: "100%"
   },
   screen: {
-    width: 500,
-    maxWidth: "90%"
+    padding: 15,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

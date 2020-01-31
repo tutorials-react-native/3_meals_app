@@ -37,7 +37,12 @@ const styles = StyleSheet.create({
     margin: 15,
     height: 150,
     borderRadius: 10,
-    overflow: "hidden"
+    overflow: Platform.OS === "android" ? "hidden" : "visible",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.26,
+    shadowRadius: 10,
+    elevation: 10
   },
   touchable: {
     flex: 1
@@ -47,12 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "flex-end",
     padding: 18,
-    borderRadius: 10,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.26,
-    shadowRadius: 10,
-    elevation: 3
+    borderRadius: 10
   },
   title: {
     fontFamily: "open-sans-bold",

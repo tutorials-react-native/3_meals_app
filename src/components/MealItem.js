@@ -16,45 +16,60 @@ const MealItem = ({
   onSelectMeal
 }) => {
   return (
-    <View style={styles.mealItem}>
-      <TouchableOpacity onPress={onSelectMeal}>
-        <View style={styles.contentContainer}>
-          <View style={styles.header}>
-            <ImageBackground source={{ uri: imageUrl }} style={styles.image}>
-              <Text style={styles.title}>{title}</Text>
-            </ImageBackground>
+    <View style={styles.shadow}>
+      <View style={styles.mealItem}>
+        <TouchableOpacity onPress={onSelectMeal}>
+          <View>
+            <View style={styles.header}>
+              <ImageBackground source={{ uri: imageUrl }} style={styles.image}>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.title}>{title}</Text>
+                </View>
+              </ImageBackground>
+            </View>
+            <View style={styles.information}>
+              <Text style={styles.infoText}>{duration}m</Text>
+              <Text style={styles.infoText}>{complexity.toUpperCase()}</Text>
+              <Text style={styles.infoText}>{affordability.toUpperCase()}</Text>
+            </View>
           </View>
-          <View style={styles.information}>
-            <Text style={styles.infoText}>{duration}m</Text>
-            <Text style={styles.infoText}>{complexity.toUpperCase()}</Text>
-            <Text style={styles.infoText}>{affordability.toUpperCase()}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  shadow: {
+    flex: 1,
+    margin: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    shadowOpacity: 0.26
+  },
   mealItem: {
     width: "100%",
-    height: 150,
-    backgroundColor: "#ccc",
-    marginVertical: 10,
+    height: 200,
+    backgroundColor: "#f5f5f5",
     borderRadius: 10,
-    overflow: "hidden"
+    overflow: "hidden",
+    elevation: 10 //왠지 shadow 에 넣으면 안되고 여기  넣어야 android 에 제대로 적용이 된다.
   },
   image: {
     width: "100%",
     height: "100%",
     justifyContent: "flex-end"
   },
-  title: {
+  titleContainer: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+    paddingVertical: 5,
+    paddingHorizontal: 12
+  },
+  title: {
     color: "white",
     textAlign: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+
     fontFamily: "open-sans-bold"
   },
   header: {
@@ -62,9 +77,10 @@ const styles = StyleSheet.create({
   },
   information: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
-    height: "15%"
+    height: "15%",
+    paddingHorizontal: 10
   },
   infoText: {
     fontFamily: "open-sans"
