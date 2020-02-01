@@ -1,5 +1,5 @@
 import CategoryGridTile from "./CategoryGridTile";
-import MealItem from "./MealItem";
 import IoniconsHeaderButton from "./IoniconsHeaderButton";
+import MealsList from "./MealsList";
 
-export { CategoryGridTile, MealItem, IoniconsHeaderButton };
+export { CategoryGridTile, IoniconsHeaderButton, MealsList };

@@ -25,8 +25,10 @@ const CategoriesScreen = ({ navigation }) => {
   );
 };
 
-CategoriesScreen.navigationOptions = {
-  headerTitle: "CATEGORIES"
+CategoriesScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerTitle: "CATEGORIES"
+  };
 };
 
 const styles = StyleSheet.create({
