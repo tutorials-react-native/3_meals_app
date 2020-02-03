@@ -1,24 +1,35 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import { useSelector } from "react-redux";
 
-import { CATEGORIES, MEALS } from "data/dummy-data";
+import { CATEGORIES } from "data/dummy-data";
 import { MealsList } from "components";
-
-// const selectCategory = navigation => {
-//   const categoryId = navigation.getParam("categoryId");
-//   return CATEGORIES.find(category => category.id === categoryId);
-// };
+import { selectors } from "store";
 
 const CategoryMealsScreen = ({ navigation }) => {
-  const meals = MEALS.filter(
-    meal => ["m1", "m2", "m4", "m5"].findIndex(id => id === meal.id) >= 0
-  );
+  const favMeals = useSelector(selectors.meals.getFavorites);
 
-  return <MealsList meals={meals} navigation={navigation} />;
+  if (favMeals.length === 0 || !favMeals) {
+    return (
+      <View style={styles.content}>
+        <Text>No favorite meals found. Start adding some!</Text>
+      </View>
+    );
+  }
+
+  return <MealsList meals={favMeals} navigation={navigation} />;
 };
 
 CategoryMealsScreen.navigationOptions = {
   headerTitle: "Your Favorites"
 };
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 export default CategoryMealsScreen;

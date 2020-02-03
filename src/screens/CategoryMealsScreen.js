@@ -1,8 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import { useSelector } from "react-redux";
 
-import { CATEGORIES, MEALS } from "data/dummy-data";
+import { CATEGORIES } from "data/dummy-data";
 import { MealsList } from "components";
+import { DefaultText } from "components/Text";
+import { selectors } from "store";
 
 const selectCategory = navigation => {
   const categoryId = navigation.getParam("categoryId");
@@ -10,10 +13,19 @@ const selectCategory = navigation => {
 };
 
 const CategoryMealsScreen = ({ navigation }) => {
+  const filteredMeals = useSelector(selectors.meals.getFilteredMeals);
   const selectedCategory = selectCategory(navigation);
-  const meals = MEALS.filter(
+  const meals = filteredMeals.filter(
     meal => meal.categoryIds.indexOf(selectedCategory.id) >= 0
   );
+
+  if (meals.length === 0 || !meals) {
+    return (
+      <View style={styles.content}>
+        <DefaultText>No meals here or All filtered out.</DefaultText>
+      </View>
+    );
+  }
 
   return <MealsList meals={meals} navigation={navigation} />;
 };
@@ -24,5 +36,13 @@ CategoryMealsScreen.navigationOptions = ({ navigation }) => {
     headerTitle: selectedCategory.title
   };
 };
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 export default CategoryMealsScreen;

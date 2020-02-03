@@ -7,6 +7,8 @@ import {
   ImageBackground
 } from "react-native";
 
+import { DefaultText } from "components/Text";
+
 const MealItem = ({ itemData, onSelectMeal }) => {
   const {
     title,
@@ -28,9 +30,13 @@ const MealItem = ({ itemData, onSelectMeal }) => {
               </ImageBackground>
             </View>
             <View style={styles.information}>
-              <Text style={styles.infoText}>{duration}m</Text>
-              <Text style={styles.infoText}>{complexity.toUpperCase()}</Text>
-              <Text style={styles.infoText}>{affordability.toUpperCase()}</Text>
+              <DefaultText style={styles.infoText}>
+                {complexity.toUpperCase()}
+              </DefaultText>
+              <DefaultText style={styles.infoText}>{duration}m</DefaultText>
+              <DefaultText style={styles.infoText}>
+                {affordability.toUpperCase()}
+              </DefaultText>
             </View>
           </View>
         </TouchableOpacity>

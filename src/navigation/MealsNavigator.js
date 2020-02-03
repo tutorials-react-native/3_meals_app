@@ -3,7 +3,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -18,18 +18,24 @@ import {
 } from "screens";
 import Color from "constants/colors";
 
+const headerLeftMenu = navigation => ({
+  headerLeft: () => (
+    <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+      <Item
+        title="menu"
+        iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
+        onPress={() => navigation.toggleDrawer()}
+      ></Item>
+    </HeaderButtons>
+  )
+});
+
 const stackConfigOptions = {
   defaultNavigationOptions: ({ navigation }) => {
     return {
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-          <Item
-            title="menu"
-            iconName={Platform.OS === "ios" ? "ios-menu" : "md-menu"}
-            onPress={() => navigation.toggleDrawer()}
-          ></Item>
-        </HeaderButtons>
-      ),
+      headerTitleStyle: {
+        fontFamily: "open-sans"
+      },
       ...Platform.select({
         ios: {
           headerTintColor: Color.primary
@@ -47,16 +53,22 @@ const stackConfigOptions = {
 
 const MealsNavigator = createStackNavigator(
   {
-    Categories: CategoriesScreen,
+    Categories: {
+      screen: CategoriesScreen,
+      navigationOptions: ({ navigation }) => headerLeftMenu(navigation)
+    },
     CategoryMeals: CategoryMealsScreen,
-    MealDetail: { screen: MealDetailScreen }
+    MealDetail: MealDetailScreen
   },
   stackConfigOptions
 );
 
 const FavNavigator = createStackNavigator(
   {
-    Favorites: FavoritesScreen,
+    Favorites: {
+      screen: FavoritesScreen,
+      navigationOptions: ({ navigation }) => headerLeftMenu(navigation)
+    },
     MealDetail: MealDetailScreen
   },
   stackConfigOptions
@@ -64,7 +76,10 @@ const FavNavigator = createStackNavigator(
 
 const FilterNavigator = createStackNavigator(
   {
-    Filter: FiltersScreen
+    Filter: {
+      screen: FiltersScreen,
+      navigationOptions: ({ navigation }) => headerLeftMenu(navigation)
+    }
   },
   stackConfigOptions
 );
@@ -78,7 +93,13 @@ const tabConfig = {
           <Ionicons name="ios-restaurant" size={30} color={tabInfo.tintColor} />
         );
       },
-      tabBarColor: Color.primary
+      tabBarColor: Color.primary,
+      tabBarLabel:
+        Platform.OS === "android" ? (
+          <Text style={{ fontFamily: "open-sans" }}>Meals</Text>
+        ) : (
+          "Meals"
+        )
     }
   },
   Favorite: {
@@ -95,14 +116,18 @@ const tabConfig = {
 const MealfavNavigator = Platform.select({
   ios: createBottomTabNavigator(tabConfig, {
     tabBarOptions: {
-      activeTintColor: Color.accent
+      activeTintColor: Color.accent,
+      labelStyle: {
+        fontFamily: "open-sans"
+      }
     }
   }),
   android: createMaterialBottomTabNavigator(tabConfig, {
     activeColor: "white",
     shifting: true,
     barStyle: {
-      backgroundColor: Color.primary
+      backgroundColor: Color.primary,
+      fontFamily: "open-sans"
     }
   })
 });

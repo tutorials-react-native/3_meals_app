@@ -3,8 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 import * as Fonts from "expo-font";
 import { AppLoading } from "expo";
 import { enableScreens } from "react-native-screens";
+import { Provider } from "react-redux";
 
 import { MealsNavigator } from "navigation";
+import store from "store/configureStore";
 
 enableScreens();
 
@@ -25,7 +27,11 @@ export default function App() {
       />
     );
   }
-  return <MealsNavigator />;
+  return (
+    <Provider store={store}>
+      <MealsNavigator />
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
